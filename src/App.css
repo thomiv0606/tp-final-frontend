@@ -274,3 +274,12 @@
     animation: none;
   }
 }
+
+/* Skeleton de la página de detalle */
+.skeleton-detalle-img {
+  height: 320px;
+}
+
+.skeleton-detalle-info {
+  align-items: stretch;
+}

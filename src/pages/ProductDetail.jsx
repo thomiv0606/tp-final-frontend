@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import SkeletonDetail from "../components/SkeletonDetail";
 import { traducirCategoria } from "../utils/categorias";
 import { API_URL } from "../config/api";
 
@@ -36,8 +37,9 @@ function ProductDetail() {
     obtenerProducto();
   }, [id]);
 
+  // Mientras carga se muestra el skeleton del detalle
   if (cargando) {
-    return <p className="mensaje">Cargando producto...</p>;
+    return <SkeletonDetail />;
   }
 
   if (error) {
