@@ -25,7 +25,7 @@ function Home() {
       try {
         // Una petición por categoría, todas en paralelo
         const respuestas = await Promise.all(
-          CATEGORIAS.map((categoria) => fetch(`${API_URL}/${categoria}`))
+          CATEGORIAS.map((categoria) => fetch(`${API_URL}/${categoria}`)),
         );
 
         // fetch no falla con errores HTTP (404, 500), hay que verificarlo
@@ -34,7 +34,7 @@ function Home() {
         }
 
         const datos = await Promise.all(
-          respuestas.map((respuesta) => respuesta.json())
+          respuestas.map((respuesta) => respuesta.json()),
         );
 
         // Une los productos de todas las categorías en un solo array
@@ -58,17 +58,17 @@ function Home() {
 
   // Búsqueda en tiempo real: filtra por título sin distinguir mayúsculas
   const productosFiltrados = productos.filter((producto) =>
-    producto.title.toLowerCase().includes(busqueda.trim().toLowerCase())
+    producto.title.toLowerCase().includes(busqueda.trim().toLowerCase()),
   );
 
   // Paginado: calcula el total de páginas y recorta los productos a mostrar
   const totalPaginas = Math.ceil(
-    productosFiltrados.length / PRODUCTOS_POR_PAGINA
+    productosFiltrados.length / PRODUCTOS_POR_PAGINA,
   );
   const inicio = (paginaActual - 1) * PRODUCTOS_POR_PAGINA;
   const productosPagina = productosFiltrados.slice(
     inicio,
-    inicio + PRODUCTOS_POR_PAGINA
+    inicio + PRODUCTOS_POR_PAGINA,
   );
 
   return (
