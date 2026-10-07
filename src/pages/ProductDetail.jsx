@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { traducirCategoria } from "../utils/categorias";
-
-// URL base de la API pública
-const API_URL = "https://dummyjson.com/products";
+import { API_URL } from "../config/api";
 
 // Página de detalle: muestra la información completa de un producto
 function ProductDetail() {

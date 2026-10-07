@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import CardList from "../components/CardList";
 import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
+import { API_URL } from "../config/api";
 
-// URL base de la API pública y categorías que muestra la tienda
-const API_URL = "https://dummyjson.com/products/category";
+// Categorías que muestra la tienda, campos que se piden y tamaño de página
 const CATEGORIAS = ["smartphones", "laptops", "tablets", "mobile-accessories"];
+const CAMPOS = "title,description,category,price,rating,thumbnail";
 const PRODUCTOS_POR_PAGINA = 8;
 
 // Página principal: listado de productos con buscador y paginado
@@ -23,22 +24,27 @@ function Home() {
   useEffect(() => {
     const obtenerProductos = async () => {
       try {
-        // Una petición por categoría, todas en paralelo
-        const respuestas = await Promise.all(
-          CATEGORIAS.map((categoria) => fetch(`${API_URL}/${categoria}`)),
-        );
+        // Una única petición: limit=0 trae todos los productos y select
+        // limita la respuesta a los campos que usa la tarjeta
+        const respuesta = await fetch(`${API_URL}?limit=0&select=${CAMPOS}`);
 
         // fetch no falla con errores HTTP (404, 500), hay que verificarlo
-        if (respuestas.some((respuesta) => !respuesta.ok)) {
-          throw new Error("Error HTTP al consultar la API");
+        if (!respuesta.ok) {
+          throw new Error(`Error HTTP ${respuesta.status}`);
         }
 
-        const datos = await Promise.all(
-          respuestas.map((respuesta) => respuesta.json()),
-        );
+        const datos = await respuesta.json();
 
-        // Une los productos de todas las categorías en un solo array
-        setProductos(datos.flatMap((dato) => dato.products));
+        // Se queda con las categorías de la tienda y las ordena
+        // según el orden definido en CATEGORIAS
+        const productosTienda = datos.products
+          .filter((producto) => CATEGORIAS.includes(producto.category))
+          .sort(
+            (a, b) =>
+              CATEGORIAS.indexOf(a.category) - CATEGORIAS.indexOf(b.category),
+          );
+
+        setProductos(productosTienda);
       } catch (err) {
         console.error(err);
         setError("No se pudieron cargar los productos. Intentá más tarde.");

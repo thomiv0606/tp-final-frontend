@@ -50,10 +50,36 @@ Requisito: tener instalado [Node.js](https://nodejs.org/).
 5. Abrir en el navegador la dirección que muestra la terminal
    (por defecto http://localhost:5173).
 
+## Variables de entorno (opcional)
+
+La URL base de la API se lee de la variable de entorno `VITE_API_URL`,
+definida en `src/config/api.js`. Si la variable no existe, se usa por
+defecto la URL pública de DummyJSON, por lo que el proyecto funciona
+sin ninguna configuración extra.
+
+Para cambiarla, copiar el archivo `.env.example` con el nombre `.env`
+y editar el valor:
+
+    VITE_API_URL=https://dummyjson.com/products
+
+En este proyecto la URL es pública y no es un dato sensible. Se usa una
+variable de entorno como buena práctica: en un proyecto real, las URLs
+y claves de cada entorno no deben quedar escritas en el código.
+
+## Decisiones técnicas
+
+- El listado se obtiene con una única petición a la API (`limit=0` y
+  `select` para traer solo los campos necesarios) y las categorías se
+  filtran en el cliente.
+- En modo desarrollo las peticiones se ven duplicadas en la pestaña
+  Network porque React StrictMode ejecuta los efectos dos veces para
+  detectar errores. En producción se realizan una sola vez.
+
 ## Estructura del proyecto
 
 - `src/main.jsx`: punto de entrada, configura el enrutador.
 - `src/App.jsx`: encabezado y definición de rutas.
+- `src/config/api.js`: URL base de la API.
 - `src/pages/Home.jsx`: listado con buscador y paginado.
 - `src/pages/ProductDetail.jsx`: detalle de un producto.
 - `src/pages/NotFound.jsx`: página 404.
