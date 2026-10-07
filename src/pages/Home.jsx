@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CardList from "../components/CardList";
 import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
+import SkeletonCard from "../components/SkeletonCard";
 import { API_URL } from "../config/api";
 
 // Categorías que muestra la tienda, campos que se piden y tamaño de página
@@ -83,8 +84,15 @@ function Home() {
         <SearchBar busqueda={busqueda} onBuscar={manejarBusqueda} />
       </div>
 
-      {/* Renderizado condicional según el estado de la petición */}
-      {cargando && <p className="mensaje">Cargando productos...</p>}
+      {/* Mientras carga se muestran skeletons, una por tarjeta de la página */}
+      {cargando && (
+        <section className="card-list" aria-label="Cargando productos">
+          {Array.from({ length: PRODUCTOS_POR_PAGINA }, (_, indice) => (
+            <SkeletonCard key={indice} />
+          ))}
+        </section>
+      )}
+
       {error && <p className="mensaje mensaje-error">{error}</p>}
 
       {!cargando && !error && (

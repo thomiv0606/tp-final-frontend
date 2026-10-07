@@ -228,3 +228,49 @@
   font-size: 5rem;
   color: #2563eb;
 }
+
+/* Skeletons: tarjetas de carga con la misma forma que las reales */
+.skeleton-card {
+  pointer-events: none;
+}
+
+.skeleton {
+  background-color: #e5e7eb;
+  border-radius: 6px;
+  animation: skeleton-pulso 1.2s ease-in-out infinite;
+}
+
+.skeleton-img {
+  height: 200px;
+  border-radius: 0;
+}
+
+.skeleton-linea {
+  height: 14px;
+}
+
+.skeleton-titulo {
+  width: 80%;
+  height: 20px;
+}
+
+.skeleton-corta {
+  width: 40%;
+}
+
+@keyframes skeleton-pulso {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Sin animación para quien pidió reducir el movimiento en su sistema */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
