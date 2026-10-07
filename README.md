@@ -33,11 +33,11 @@ Requisito: tener instalado [Node.js](https://nodejs.org/).
 
 1. Clonar el repositorio:
 
-       git clone URL_DEL_REPOSITORIO
+       git clone https://github.com/thomiv0606/tp-final-frontend.git
 
 2. Entrar a la carpeta del proyecto:
 
-       cd NOMBRE_DE_LA_CARPETA
+       cd tp-final-frontend
 
 3. Instalar las dependencias:
 
